@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gui;
 
 import gui.guiform.ContactGUIForm;
@@ -15,13 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-/**
- *
- * @author ROM1BAC
- */
 public class ContactPanel extends JPanel {
 
-//    private JTextField contactIdField;
     private JTextField phoneField;
     private JTextField emailField;
     private JTextField addressField;
@@ -41,7 +30,6 @@ public class ContactPanel extends JPanel {
         
         constraint = new GridBagConstraints();
         
-//        contactIdField = new JTextField(10);
         phoneField = new JTextField(10);
         emailField = new JTextField(10);
         addressField = new JTextField(15);
@@ -49,9 +37,7 @@ public class ContactPanel extends JPanel {
         cityField = new JTextField(10);
         provinceField = new JTextField(10);
         countryField = new JTextField(10);
-        
-//        contactPanel = new JPanel();
- 
+         
         //setting up constraints parameters
         constraint.weightx = 1;
         constraint.weighty = 0.1;
@@ -62,16 +48,6 @@ public class ContactPanel extends JPanel {
         constraint.gridy = 0;
         constraint.anchor = GridBagConstraints.LINE_END;
         add(new JLabel("CONTACT:"), constraint);
-
-        // Id
-//        constraint.gridx = 0;
-//        constraint.gridy++;
-//        constraint.anchor = GridBagConstraints.LINE_END;
-//        add(new JLabel("ID:"), constraint);
-
-//        constraint.gridx = 1;
-//        constraint.anchor = GridBagConstraints.LINE_START;
-//        add(contactIdField, constraint);
 
         // Phone
         constraint.gridx = 0;
@@ -157,7 +133,6 @@ public class ContactPanel extends JPanel {
     }
 
     public void setEmptyContactForm() {
-//        contactIdField.setText("");
         phoneField.setText("");
         emailField.setText("");
         addressField.setText("");
@@ -168,7 +143,6 @@ public class ContactPanel extends JPanel {
     }
 
     private void setContactEditableFields(boolean editable) {
-//        contactIdField.setEditable(editable);
         phoneField.setEditable(editable);
         emailField.setEditable(editable);
         addressField.setEditable(editable);
@@ -177,26 +151,6 @@ public class ContactPanel extends JPanel {
         provinceField.setEditable(editable);
         countryField.setEditable(editable);
     }
-
-//    public void updateContactPanel(String[] contactFields) {
-//        phoneField.setText(contactFields[1]);
-//        emailField.setText(contactFields[2]);
-//        addressField.setText(contactFields[3]);
-//        zipCodeField.setText(contactFields[4]);
-//        cityField.setText(contactFields[5]);
-//        provinceField.setText(contactFields[6]);
-//        countryField.setText(contactFields[7]);
-//    }
-    
-//    public void updateContactPanel(ContactGUIForm contactGUIForm) {
-//        phoneField.setText(contactFields[1]);
-//        emailField.setText(contactFields[2]);
-//        addressField.setText(contactFields[3]);
-//        zipCodeField.setText(contactFields[4]);
-//        cityField.setText(contactFields[5]);
-//        provinceField.setText(contactFields[6]);
-//        countryField.setText(contactFields[7]);
-//    }
 
     /**
      *
