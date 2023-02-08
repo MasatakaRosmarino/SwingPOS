@@ -1,5 +1,5 @@
 # SwingPOS
-A basic Point Of Sale system developed with Java SE 8 using the Swing GUI development library and MySQL database.
+A basic Point Of Sale system developed with Java SE 8 Swing library and MySQL database.
 
 How to run the program:
 1-Download the sourcecode
