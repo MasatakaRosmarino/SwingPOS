@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import model.Product;
 import model.ProductCondition;
+import utilities.Utilities;
 
 public class ProductController extends BaseController {
     
@@ -38,7 +39,7 @@ public class ProductController extends BaseController {
     	List<ProductGUIForm> productGUIFormsList = new ArrayList<>();
     	
     	for(Product product : productsList) {
-    		ProductGUIForm productGUIForm = new ProductGUIForm(Integer.toString(product.getModelId()), product.getProductName(), product.getProductDescription(), Double.toString(product.getAcquisitionPrice()), Double.toString(product.getSellingPrice()), Integer.toString(product.getProductItemsPerUnit()), product.getProductCondition().name(), product.getAddedOn(), Integer.toString(product.getProductCategoryId()), Integer.toString(product.getSupplierId()), null);
+    		ProductGUIForm productGUIForm = new ProductGUIForm(Integer.toString(product.getModelId()), product.getProductName(), product.getProductDescription(), Double.toString(product.getAcquisitionPrice()), Double.toString(product.getSellingPrice()), Integer.toString(product.getProductItemsPerUnit()), Utilities.formatProductCondition(product.getProductCondition()), product.getAddedOn(), Integer.toString(product.getProductCategoryId()), Integer.toString(product.getSupplierId()), null);
 
     		productGUIFormsList.add(productGUIForm);
     	}
@@ -51,7 +52,7 @@ public class ProductController extends BaseController {
         List<ProductGUIForm> productGUIFormsList = new ArrayList<>();
         
     	for(Product product : productsList) {
-    		ProductGUIForm productGUIForm = new ProductGUIForm(Integer.toString(product.getModelId()), product.getProductName(), product.getProductDescription(), Double.toString(product.getAcquisitionPrice()), Double.toString(product.getSellingPrice()), Integer.toString(product.getProductItemsPerUnit()), product.getProductCondition().name(), product.getAddedOn(), Integer.toString(product.getProductCategoryId()), Integer.toString(product.getSupplierId()), null);
+    		ProductGUIForm productGUIForm = new ProductGUIForm(Integer.toString(product.getModelId()), product.getProductName(), product.getProductDescription(), Double.toString(product.getAcquisitionPrice()), Double.toString(product.getSellingPrice()), Integer.toString(product.getProductItemsPerUnit()), Utilities.formatProductCondition(product.getProductCondition()), product.getAddedOn(), Integer.toString(product.getProductCategoryId()), Integer.toString(product.getSupplierId()), null);
 
     		productGUIFormsList.add(productGUIForm);
     	}
@@ -80,7 +81,7 @@ public class ProductController extends BaseController {
     	Product product;
         try {
             if (productGUIForm.getFormIdField() == null || productGUIForm.getFormIdField().isEmpty()) {
-                product = new Product(productGUIForm.getProductName(), productGUIForm.getProductDescription(), Double.parseDouble(productGUIForm.getAcquisitionPrice()), Double.parseDouble(productGUIForm.getSellingPrice()), Integer.valueOf(productGUIForm.getProductItemsPerUnit()), ProductCondition.valueOf(productGUIForm.getProductCondition()), null, Integer.valueOf(productGUIForm.getProductCategoryId()), Integer.valueOf(productGUIForm.getSupplierId()), 0);
+                product = new Product(productGUIForm.getProductName(), productGUIForm.getProductDescription(), Double.parseDouble(productGUIForm.getAcquisitionPrice()), Double.parseDouble(productGUIForm.getSellingPrice()), Integer.valueOf(productGUIForm.getProductItemsPerUnit()), ProductCondition.valueOf(Utilities.convertStringToEnum(productGUIForm.getProductCondition())), null, Integer.valueOf(productGUIForm.getProductCategoryId()), Integer.valueOf(productGUIForm.getSupplierId()), 0);
             } else {
                 product = new Product(Integer.parseInt(productGUIForm.getFormIdField()), productGUIForm.getProductName(), productGUIForm.getProductDescription(), Double.parseDouble(productGUIForm.getAcquisitionPrice()), Double.parseDouble(productGUIForm.getSellingPrice()), Integer.valueOf(productGUIForm.getProductItemsPerUnit()), ProductCondition.valueOf(productGUIForm.getProductCondition()), null, Integer.valueOf(productGUIForm.getProductCategoryId()), Integer.valueOf(productGUIForm.getSupplierId()), 0);
             }

@@ -22,16 +22,33 @@ public class SettingsManager {
         
     
     public SettingsManager(String filePath){
-        fullFilePath = filePath + "\\Point_Of_Sale";
-        file = new File(fullFilePath);
+//        fullFilePath = filePath + "\\Point_Of_Sale";
+//        file = new File(filePath);
+    	
+    	filePath = Utilities.getMainFolderPath();
+    	
+    	fullFilePath = filePath;
+    	file = new File(fullFilePath);
         
         if(!file.exists()){
             file.mkdir();
-            file = new File(fullFilePath + "\\Customers_Invoices");
+//            file = new File(fullFilePath + "\\Customers_Invoices");
+            file = new File(fullFilePath);
             file.mkdir();
         }
         
         file = new File(fullFilePath + "\\settings.sav");
+        
+        //test
+//        fullFilePath = Utilities.getCustomerInvoicePath();
+        File file = new File(Utilities.getCustomerInvoicePath());
+        if(!file.exists()){
+            file.mkdir();
+            file = new File(Utilities.getCustomerInvoicePath());
+            file.mkdir();
+        }
+        //
+        
     }
     
     public boolean fileExists(){
@@ -61,6 +78,7 @@ public class SettingsManager {
 
     public SettingsFile getSettingsFromFile() {
         try {
+        	System.out.println(file.getPath());
             fis = new FileInputStream(file);
             ois = new ObjectInputStream(fis);
             SettingsFile settingsFile = (SettingsFile) ois.readObject();

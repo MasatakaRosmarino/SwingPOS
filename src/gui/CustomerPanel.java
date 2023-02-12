@@ -33,8 +33,6 @@ public class CustomerPanel extends JPanel {
     private final JButton nextButton;
     private final JButton previousButton;
 
-    //variables for populating the table
-//    private final String columnNames[] = {"ID", "Name", "Lastname", "Gender", "ID Number", "Birth Date"};
     
     private final String columnNames[] = {"Name", "Lastname", "ID Number"};
 

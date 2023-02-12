@@ -10,6 +10,7 @@ import model.Invoice;
 import model.PaymentMethod;
 import model.Product;
 import model.ProductCondition;
+import utilities.Utilities;
 
 public class InvoiceController extends BaseController {
     
@@ -45,7 +46,7 @@ public class InvoiceController extends BaseController {
         double acquisitionPrice = Double.parseDouble(productGUIForm.getAcquisitionPrice());
         double sellingPrice = Double.parseDouble(productGUIForm.getSellingPrice());
         int itemsPerUnit = Integer.parseInt(productGUIForm.getProductItemsPerUnit());
-        ProductCondition productCondition = ProductCondition.valueOf(productGUIForm.getProductCondition());
+        ProductCondition productCondition = ProductCondition.valueOf(Utilities.convertStringToEnum(productGUIForm.getProductCondition()));
         int categoryId = Integer.parseInt(productGUIForm.getProductCategoryId());
         int supplierId = Integer.parseInt(productGUIForm.getSupplierId());
         int invoiceId = Integer.parseInt(productGUIForm.getInvoiceId());

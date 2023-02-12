@@ -3,11 +3,8 @@ package controller;
 import database.DataBaseManager;
 import gui.guiform.ContactGUIForm;
 import gui.guiform.SupplierGUIForm;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Supplier;
 
 public class SupplierController extends BaseController {

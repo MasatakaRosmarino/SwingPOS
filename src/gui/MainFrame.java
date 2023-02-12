@@ -71,6 +71,7 @@ public class MainFrame extends JFrame {
     private SupplierGUIForm supplierGUIForm;
     private List<SupplierGUIForm> supplierGUIFormsList;
     private Map<Integer, ProductGUIForm> shoppingCartMap;
+    private List<InvoiceGUIForm> invoiceGUIFormsList;
 
     public static int selectedTab;
 
@@ -79,7 +80,35 @@ public class MainFrame extends JFrame {
     private InvoiceManager invoiceManager;
 
     public MainFrame() {
+    	//load settings file, database and controllers
+//        settingsManager = new SettingsManager(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
+        settingsManager = new SettingsManager(Utilities.getMainFolderPath());
 
+        if (settingsManager.fileExists()) {
+            settingsFile = (SettingsFile) settingsManager.getSettingsFromFile();
+
+            DataBaseManager.dbUrl = settingsFile.getDbURL();
+            DataBaseManager.dbUser = settingsFile.getDbUsername();
+            DataBaseManager.dbPassword = settingsFile.getDbPassword();
+
+            DataBaseManager.limit = Integer.parseInt(settingsFile.getQueryLimit());
+        }
+
+        DataBaseManager database = new DataBaseManager();
+        database.connectToDB();
+
+        if (database.getConnection() == null) {
+            new ConnectionConfigurator();
+        }
+
+        customerController = new CustomerController(database);
+        supplierController = new SupplierController(database);
+        categoryController = new CategoryController(database);
+        contactController = new ContactController(database);
+        productController = new ProductController(database);
+        invoiceController = new InvoiceController(database);
+    	//
+    	
         setTitle("Thrif-T-hrill");
 
         usersPanel = new UsersPanel();
@@ -105,32 +134,33 @@ public class MainFrame extends JFrame {
 
         add(mainSplit);
 
-        //load db and program settings
-        settingsManager = new SettingsManager(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
-
-        if (settingsManager.fileExists()) {
-            settingsFile = (SettingsFile) settingsManager.getSettingsFromFile();
-
-            DataBaseManager.dbUrl = settingsFile.getDbURL();
-            DataBaseManager.dbUser = settingsFile.getDbUsername();
-            DataBaseManager.dbPassword = settingsFile.getDbPassword();
-
-            DataBaseManager.limit = Integer.parseInt(settingsFile.getQueryLimit());
-        }
-
-        DataBaseManager database = new DataBaseManager();
-        database.connectToDB();
-
-        if (database.getConnection() == null) {
-            new ConnectionConfigurator();
-        }
-
-        customerController = new CustomerController(database);
-        supplierController = new SupplierController(database);
-        categoryController = new CategoryController(database);
-        contactController = new ContactController(database);
-        productController = new ProductController(database);
-        invoiceController = new InvoiceController(database);
+//        //load db and program settings
+//        settingsManager = new SettingsManager(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
+////        settingsManager = new SettingsManager(Utilities.getMainFolderPath());
+//
+//        if (settingsManager.fileExists()) {
+//            settingsFile = (SettingsFile) settingsManager.getSettingsFromFile();
+//
+//            DataBaseManager.dbUrl = settingsFile.getDbURL();
+//            DataBaseManager.dbUser = settingsFile.getDbUsername();
+//            DataBaseManager.dbPassword = settingsFile.getDbPassword();
+//
+//            DataBaseManager.limit = Integer.parseInt(settingsFile.getQueryLimit());
+//        }
+//
+//        DataBaseManager database = new DataBaseManager();
+//        database.connectToDB();
+//
+//        if (database.getConnection() == null) {
+//            new ConnectionConfigurator();
+//        }
+//
+//        customerController = new CustomerController(database);
+//        supplierController = new SupplierController(database);
+//        categoryController = new CategoryController(database);
+//        contactController = new ContactController(database);
+//        productController = new ProductController(database);
+//        invoiceController = new InvoiceController(database);
 
         shoppingCartMap = new LinkedHashMap<>();
         productPanel.setShoppingCartMap(shoppingCartMap);
@@ -639,7 +669,7 @@ public class MainFrame extends JFrame {
 
             @Override
             public void nextPageDisplayed() {
-                if (DataBaseManager.productOffset <= (productController.getDatabaseTableRowsCount(productPanel.productCategoryId) - DataBaseManager.limit)) {
+                if (DataBaseManager.productOffset <= (productController.getDatabaseTableRowsCount(ProductPanel.productCategoryId) - DataBaseManager.limit)) {
                     DataBaseManager.productOffset += DataBaseManager.limit;
 
                     clearProductGUIFormsList();
@@ -648,7 +678,7 @@ public class MainFrame extends JFrame {
 
                     productPanel.setPreviousButtonEnabled(true);
 
-                    if (DataBaseManager.productOffset >= (productController.getDatabaseTableRowsCount(productPanel.productCategoryId) - DataBaseManager.limit)) {
+                    if (DataBaseManager.productOffset >= (productController.getDatabaseTableRowsCount(ProductPanel.productCategoryId) - DataBaseManager.limit)) {
                         productPanel.setPreviousButtonEnabled(true);
                         productPanel.setNextButtonEnabled(false);
                     }
@@ -780,6 +810,8 @@ public class MainFrame extends JFrame {
                 }
 
                 salesPanel.populateSalesTree(salesInfoMap);
+                
+                salesPanel.populateInvoiceList();
             }
         });
 

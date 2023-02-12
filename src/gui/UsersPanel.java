@@ -16,12 +16,9 @@ import gui.guilistener.CustomerGUIListener;
 import gui.guilistener.PopUpMenuDialogListener;
 import gui.guilistener.SupplierContactGUIListener;
 import gui.guilistener.SupplierGUIListener;
-//import gui.guilistener.UsersGUIListener;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -442,10 +439,6 @@ public class UsersPanel extends JPanel {
         customerPanel.setDialogListener(new PopUpMenuDialogListener() {
             @Override
             public void viewDialogShown() {
-//                if (viewCustomerDialog == null || !viewCustomerDialog.isShowing()) {
-//                    viewCustomerDialog = new ViewCustomerDialog(customerGUIForm, contactGUIForm, customerGUIListener, supplierGUIListener);
-//                }
-            	
             	if (crudDialog == null || !crudDialog.isShowing()) {
             		crudDialog = new ViewCustomerDialog(customerGUIForm, contactGUIForm, customerGUIListener, supplierGUIListener);
                 }
@@ -453,9 +446,6 @@ public class UsersPanel extends JPanel {
 
             @Override
             public void updateDialogShown() {
-//                if (updateCustomerDialog == null || !updateCustomerDialog.isShowing()) {
-//                    updateCustomerDialog = new UpdateCustomerDialog(customerGUIForm, contactGUIForm, customerGUIListener, supplierGUIListener, customerContactGUIListener);
-//                }
             	if (crudDialog == null || !crudDialog.isShowing()) {
             		crudDialog = new UpdateCustomerDialog(customerGUIForm, contactGUIForm, customerGUIListener, supplierGUIListener, customerContactGUIListener);
                 }

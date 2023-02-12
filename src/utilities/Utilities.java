@@ -1,8 +1,16 @@
 package utilities;
 
-import javax.swing.JOptionPane;
 
-public class Utilities {
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileSystemView;
+
+import model.ProductCondition;
+
+public final class Utilities {
+	
+	private Utilities() {
+		/*Do not instantiate this class*/
+	}
         
     public static int getIntegerValueFromDecimalNumber(String amount){
         return (int) (Double.valueOf(amount) * 100);
@@ -19,7 +27,63 @@ public class Utilities {
     public static String getShopName(){
         return "Thif-T-rill\nThrill Avenue 23, 09853\nNew York City, USA";
     }
-            
+    
+    //Enum functions
+    public static final String convertStringToEnum(String string) {
+		string = string.toLowerCase(); 	
+    	String[] strArr = string.split(" ");   	
+    	String finalString = String.join("", strArr);
+    	
+    	return finalString;
+    }
+    
+    public static final String formatProductCondition(ProductCondition productCondition) {
+    	switch(productCondition) {
+	    	case brandnew:
+	    		return "Brand new";
+			case likenew:
+	    		return "Like new";
+			case good:
+				return "Good";
+			case acceptable:
+				return "Acceptable";
+			case worn:
+				return "Worn";
+			default:
+	    		return "Not set";
+    	}
+    }
+    
+    public static final String formatPaymentMethod(String paymentMethod) {
+    	switch(paymentMethod) {
+	    	case "cash":
+	    		return "Cash";
+	    	case "banktransfer":
+	    		return "Bank transfer";
+	    	case "creditcard":
+	    		return "Credit card";
+	    	case "debitcard":
+	    		return "Debit card";
+	    	case "cheque":
+	    		return "Cheque";
+	    	case "paypal":
+	    		return "PayPal";
+    		default:
+    			return "Not specified";
+    	}
+    }
+    
+//    //Get path of main folder
+    public static final String getMainFolderPath() {
+    	return FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\Point_Of_Sale";
+    }
+    
+    //Get path of customer invoices
+    public static final String getCustomerInvoicePath() {
+    	return FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\Point_Of_Sale\\Customers_Invoices";
+    }
+      
+    //Notifications
     public static void notifyOfRowInsertion(String entityName){
         JOptionPane.showMessageDialog(null, "New " + entityName + " added successfully!");
     }

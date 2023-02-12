@@ -156,7 +156,7 @@ public class InvoiceManager {
             document.add(emptyLine);
             
             document.add(new Paragraph("Total paid: " + invoiceGUIForm.getTotalPayment() + " €"));
-            document.add(new Paragraph("Payment method: " + invoiceGUIForm.getPaymentMethod()));
+            document.add(new Paragraph("Payment method: " + Utilities.formatPaymentMethod(invoiceGUIForm.getPaymentMethod())));
             document.add(new Paragraph("Notes:"));
             document.add(new Paragraph(invoiceGUIForm.getNote()));
             

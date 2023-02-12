@@ -67,11 +67,11 @@ public class CreateProductDialog extends BaseDialog {
 
         conditionModel = new DefaultComboBoxModel<>();
 
-        conditionModel.addElement("brandnew");
-        conditionModel.addElement("likenew");
-        conditionModel.addElement("good");
-        conditionModel.addElement("acceptable");
-        conditionModel.addElement("worn");
+        conditionModel.addElement("Brand new");
+        conditionModel.addElement("Like new");
+        conditionModel.addElement("Good");
+        conditionModel.addElement("Acceptable");
+        conditionModel.addElement("Worn");
 
         conditionBox = new JComboBox<>(conditionModel);
 

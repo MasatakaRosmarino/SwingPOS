@@ -36,9 +36,9 @@ public class CreateInvoiceDialog extends JDialog {
     private final JSpinner discountSpinner;
     private final SpinnerNumberModel discountModel;
     private final JButton discountButton;
-    private final JComboBox<PaymentMethod> paymentMethodComboBox;
+    private final JComboBox<String> paymentMethodComboBox;
     private final JLabel totalPayment;
-    private final DefaultComboBoxModel<PaymentMethod> paymentMethodModel;
+    private final DefaultComboBoxModel<String> paymentMethodModel;
     private final JTextArea noteArea;
     private final JButton confirmButton;
 
@@ -67,12 +67,12 @@ public class CreateInvoiceDialog extends JDialog {
         paymentMethodModel = new DefaultComboBoxModel<>();
         paymentMethodComboBox = new JComboBox<>();
         
-        paymentMethodModel.addElement(PaymentMethod.cash);
-        paymentMethodModel.addElement(PaymentMethod.banktransfer);
-        paymentMethodModel.addElement(PaymentMethod.creditcard);
-        paymentMethodModel.addElement(PaymentMethod.debitcard);
-        paymentMethodModel.addElement(PaymentMethod.cheque);
-        paymentMethodModel.addElement(PaymentMethod.paypal);
+        paymentMethodModel.addElement("Cash");
+        paymentMethodModel.addElement("Bank transfer");
+        paymentMethodModel.addElement("Credit card");
+        paymentMethodModel.addElement("Debit card");
+        paymentMethodModel.addElement("Cheque");
+        paymentMethodModel.addElement("Paypal");
         
         paymentMethodComboBox.setModel(paymentMethodModel);
         
@@ -243,11 +243,11 @@ public class CreateInvoiceDialog extends JDialog {
                 String customerId = customerGUIForm.getFormIdField();
                 double discount = (Double) discountSpinner.getValue();
                 String discountString = Double.toString(discount);
-                String paymentMethod = paymentMethodComboBox.getSelectedItem().toString();
+                String paymentMethod = (String) paymentMethodComboBox.getSelectedItem();
                 String finalAmount = ProductPanel.purchaseFinalAmount;
                 String totalPaymentString = totalPayment.getText();
                         
-                invoiceGUIForm = new InvoiceGUIForm(customerId, taxAmount, finalAmount, discountString, totalPaymentString, paymentMethod, noteArea.getText(), null, null, null);
+                invoiceGUIForm = new InvoiceGUIForm(customerId, taxAmount, finalAmount, discountString, totalPaymentString, paymentMethod.valueOf(Utilities.convertStringToEnum(paymentMethod)), noteArea.getText(), null, null, null);
                                         
                 invoiceGUIListener.invoiceGenerated(invoiceGUIForm);
                 

@@ -1,7 +1,5 @@
 package gui;
 
-import gui.dialog.CreateCustomerDialog;
-import gui.dialog.CreateSupplierDialog;
 import gui.dialog.HelpDialog;
 import gui.dialog.SettingsDialog;
 import gui.guilistener.MenuBarListener;
