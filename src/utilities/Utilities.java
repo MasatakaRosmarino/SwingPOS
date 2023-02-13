@@ -73,7 +73,7 @@ public final class Utilities {
     	}
     }
     
-//    //Get path of main folder
+    //Get path of main folder
     public static final String getMainFolderPath() {
     	return FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\Point_Of_Sale";
     }

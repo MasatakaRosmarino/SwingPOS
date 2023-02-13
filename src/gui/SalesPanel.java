@@ -51,60 +51,19 @@ public class SalesPanel extends JPanel {
         invoicePanel.setBorder(BorderFactory.createLineBorder(Color.black));
         
 //        folderPath = Utilities.getMainFolderPath() + "\\Customers_Invoices";
-        folderPath = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\Point_Of_Sale\\Customers_Invoices";
+//        folderPath = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\Point_Of_Sale\\Customers_Invoices";
+        folderPath = Utilities.getCustomerInvoicePath();
         
-        folder = new File(folderPath);
-        
-        listOfFiles = folder.listFiles();
-        
-        if(listOfFiles != null && listOfFiles.length >= 0){
-        	fileName = new String[listOfFiles.length];
-            viewButton = new JButton[listOfFiles.length];
-            populateInvoiceList();
-        }
-        
-//        fileName = new String[listOfFiles.length];
-//        viewButton = new JButton[listOfFiles.length];
-        
-        //setting up constraints parameters
-//        constraint.weightx = 1;
-//        constraint.weighty = 0.1;
-//        constraint.insets = new Insets(0, 5, 0, 5);
+//        folder = new File(folderPath);
 //        
-//        for (int i = 0; i < listOfFiles.length; i++) {
-//        	if (listOfFiles[i].isFile()) {
-//        		fileName[i] = listOfFiles[i].getName();
-//        		String selectedFile = fileName[i];
-//        		
-//        		constraint.gridx = 0;
-//                constraint.gridy = i;
-//                constraint.anchor = GridBagConstraints.LINE_END;
-//                invoicePanel.add(new JLabel(listOfFiles[i].getName()), constraint);
-//
-//                viewButton[i] = new JButton("View");
-//                
-//                viewButton[i].setMargin(new Insets(1, 1, 1, 1));
-//                
-//                constraint.gridx = 1;
-//                constraint.anchor = GridBagConstraints.LINE_START;
-//                invoicePanel.add(viewButton[i], constraint);
-//                
-//                viewButton[i].addActionListener(new ActionListener() {
-//					
-//					@Override
-//					public void actionPerformed(ActionEvent e) {
-//						try {
-//							Runtime.getRuntime().exec("explorer.exe /select, " + folderPath + "\\" + selectedFile);
-//						} catch (IOException e1) {
-//							e1.printStackTrace();
-//						}
-//						
-//					}
-//				});
-//        	}
+//        listOfFiles = folder.listFiles();
+//        
+//        if(listOfFiles != null && listOfFiles.length >= 0){
+//        	fileName = new String[listOfFiles.length];
+//            viewButton = new JButton[listOfFiles.length];
+////            populateInvoiceList();
 //        }
-//        
-//        add(invoicePanel, BorderLayout.EAST);
+        
     }
     
     public void populateSalesTree(Map<String, List<String>> salesInfoMap) {
@@ -131,7 +90,15 @@ public class SalesPanel extends JPanel {
         add(salesTree, BorderLayout.CENTER);
     }
     
-    public void populateInvoiceList() {
+    public void populateInvoiceList(String path) {
+      folder = new File(path);
+      
+      listOfFiles = folder.listFiles();
+      
+      if(listOfFiles != null && listOfFiles.length >= 0){
+      	fileName = new String[listOfFiles.length];
+          viewButton = new JButton[listOfFiles.length];
+      }
     	constraint.weightx = 1;
         constraint.weighty = 0.1;
         constraint.insets = new Insets(0, 5, 0, 5);
@@ -171,5 +138,46 @@ public class SalesPanel extends JPanel {
         
         add(invoicePanel, BorderLayout.EAST);
     }
+    
+//    public void populateInvoiceList() {
+//    	constraint.weightx = 1;
+//        constraint.weighty = 0.1;
+//        constraint.insets = new Insets(0, 5, 0, 5);
+//        
+//        for (int i = 0; i < listOfFiles.length; i++) {
+//        	if (listOfFiles[i].isFile()) {
+//        		fileName[i] = listOfFiles[i].getName();
+//        		String selectedFile = fileName[i];
+//        		
+//        		constraint.gridx = 0;
+//                constraint.gridy = i;
+//                constraint.anchor = GridBagConstraints.LINE_START;
+//                invoicePanel.add(new JLabel(listOfFiles[i].getName()), constraint);
+//
+//                viewButton[i] = new JButton("View");
+//                
+//                viewButton[i].setMargin(new Insets(1, 1, 1, 1));
+//                
+//                constraint.gridx = 1;
+//                constraint.anchor = GridBagConstraints.LINE_END;
+//                invoicePanel.add(viewButton[i], constraint);
+//                
+//                viewButton[i].addActionListener(new ActionListener() {
+//					
+//					@Override
+//					public void actionPerformed(ActionEvent e) {
+//						try {
+//							Runtime.getRuntime().exec("explorer.exe /select, " + folderPath + "\\" + selectedFile);
+//						} catch (IOException e1) {
+//							e1.printStackTrace();
+//						}
+//						
+//					}
+//				});
+//        	}
+//        }
+//        
+//        add(invoicePanel, BorderLayout.EAST);
+//    }
 
 }

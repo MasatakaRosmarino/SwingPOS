@@ -71,7 +71,6 @@ public class MainFrame extends JFrame {
     private SupplierGUIForm supplierGUIForm;
     private List<SupplierGUIForm> supplierGUIFormsList;
     private Map<Integer, ProductGUIForm> shoppingCartMap;
-    private List<InvoiceGUIForm> invoiceGUIFormsList;
 
     public static int selectedTab;
 
@@ -178,6 +177,10 @@ public class MainFrame extends JFrame {
         }
 
         populateSalesTree();
+        
+        //test
+        salesPanel.populateInvoiceList(Utilities.getCustomerInvoicePath());
+        //
 
         //fetching customers from DB
         populateCustomerGUITableFromDataBase();
@@ -811,7 +814,7 @@ public class MainFrame extends JFrame {
 
                 salesPanel.populateSalesTree(salesInfoMap);
                 
-                salesPanel.populateInvoiceList();
+                salesPanel.populateInvoiceList(Utilities.getCustomerInvoicePath());
             }
         });
 
