@@ -20,7 +20,8 @@ public class SettingsManager {
     private File file;
     
     public SettingsManager(String filePath){
-    	filePath = Utilities.getMainFolderPath();
+//    	filePath = Utilities.getMainFolderPath();
+    	filePath = Utilities.getFolderPath(Utilities.MAIN_FOLDER_PATH);
     	
     	fullFilePath = filePath;
     	file = new File(fullFilePath);
@@ -33,10 +34,13 @@ public class SettingsManager {
         
         file = new File(fullFilePath + "\\settings.sav");
         
-        File file = new File(Utilities.getCustomerInvoicePath());
+//        File file = new File(Utilities.getCustomerInvoicePath());
+        File file = new File(Utilities.getFolderPath(Utilities.CUSTOMER_INVOICE_FOLDER_PATH));
+        
         if(!file.exists()){
             file.mkdir();
-            file = new File(Utilities.getCustomerInvoicePath());
+//            file = new File(Utilities.getCustomerInvoicePath());
+            file = new File(Utilities.getFolderPath(Utilities.CUSTOMER_INVOICE_FOLDER_PATH));
             file.mkdir();
         }        
     }

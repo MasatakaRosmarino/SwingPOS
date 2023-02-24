@@ -302,9 +302,10 @@ public class UsersPanel extends JPanel {
          * if no row is selected, the toolbar buttons are not enabled
          */
         if (!customerTable.isRowSelected(customerTable.getSelectedRow())) {
-            viewRecordButton.setEnabled(false);
-            updateRecordButton.setEnabled(false);
-            removeRecordButton.setEnabled(false);
+//            viewRecordButton.setEnabled(false);
+//            updateRecordButton.setEnabled(false);
+//            removeRecordButton.setEnabled(false);
+        	setCustomerProcessingButtonsVisible(false);
         }
 
         customerTable.addMouseListener(new MouseAdapter() {
@@ -316,9 +317,10 @@ public class UsersPanel extends JPanel {
                         customerContactGUIListener.customerContactInfoDisplayed();
 
                         if (customerTable.isRowSelected(customerTable.getSelectedRow())) {
-                            viewRecordButton.setEnabled(true);
-                            updateRecordButton.setEnabled(true);
-                            removeRecordButton.setEnabled(true);
+//                            viewRecordButton.setEnabled(true);
+//                            updateRecordButton.setEnabled(true);
+//                            removeRecordButton.setEnabled(true);
+                        	setCustomerProcessingButtonsVisible(true);
 
                             //setting customerGUIForm object from the underlying list every time a cutomer table row is selected
                             customerGUIListener.customerGUIFormObjectSet();
@@ -352,9 +354,10 @@ public class UsersPanel extends JPanel {
                         supplierContactGUIListener.supplierContactInfoDisplayed();
 
                         if (supplierTable.isRowSelected(supplierTable.getSelectedRow())) {
-                            viewRecordButton.setEnabled(true);
-                            updateRecordButton.setEnabled(true);
-                            removeRecordButton.setEnabled(true);
+//                            viewRecordButton.setEnabled(true);
+//                            updateRecordButton.setEnabled(true);
+//                            removeRecordButton.setEnabled(true);
+                        	setCustomerProcessingButtonsVisible(true);
 
                             //setting supplierGUIForm object from the underlying list every time a cutomer table row is selected
                             supplierGUIListener.supplierGUIFormObjectSet();
@@ -393,9 +396,10 @@ public class UsersPanel extends JPanel {
                 customerTable.getSelectionModel().clearSelection();
                 supplierTable.getSelectionModel().clearSelection();
 
-                viewRecordButton.setEnabled(false);
-                updateRecordButton.setEnabled(false);
-                removeRecordButton.setEnabled(false);
+//                viewRecordButton.setEnabled(false);
+//                updateRecordButton.setEnabled(false);
+//                removeRecordButton.setEnabled(false);
+                setCustomerProcessingButtonsVisible(false);
 
                 contactPanel.setEmptyContactForm();
 
@@ -543,6 +547,12 @@ public class UsersPanel extends JPanel {
 
     public void setSupplierGUIForm(SupplierGUIForm supplierGUIForm) {
         this.supplierGUIForm = supplierGUIForm;
+    }
+    
+    public void setCustomerProcessingButtonsVisible(boolean visible) {
+    	viewRecordButton.setEnabled(visible);
+        updateRecordButton.setEnabled(visible);
+        removeRecordButton.setEnabled(visible);
     }
 
     /*---------------- listener setter ----------------------*/

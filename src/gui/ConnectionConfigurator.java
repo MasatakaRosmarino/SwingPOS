@@ -126,7 +126,8 @@ public class ConnectionConfigurator extends JFrame {
                 System.out.println("Saving settings...");
                 
 //                SettingsManager settingsManager = new SettingsManager(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());                
-                SettingsManager settingsManager = new SettingsManager(Utilities.getMainFolderPath());                
+//                SettingsManager settingsManager = new SettingsManager(Utilities.getMainFolderPath()); 
+                SettingsManager settingsManager = new SettingsManager(Utilities.getFolderPath(Utilities.MAIN_FOLDER_PATH)); 
 
                 SettingsFile settingsFile = new SettingsFile(dbURLField.getText(), Integer.toString((Integer) dbPort.getValue()), dbUsernameField.getText(), dbPasswordField.getText(), "20");
 

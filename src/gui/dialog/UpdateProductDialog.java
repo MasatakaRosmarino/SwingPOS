@@ -18,25 +18,30 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.text.NumberFormatter;
 
 public class UpdateProductDialog extends BaseDialog {
 
-    private JTextField nameField;
-    private JTextArea descriptionArea;
-    private JSpinner acquisitionPriceSpinner;
-    private JSpinner sellingPriceSpinner;
+    private final JTextField nameField;
+    private final JTextArea descriptionArea;
+    private final JSpinner acquisitionPriceSpinner;
+    private final JSpinner sellingPriceSpinner;
     private final SpinnerNumberModel acquisitionPriceModel;
+    private final JFormattedTextField acquisitionPriceText ;
     private final SpinnerNumberModel sellingPriceModel;
-    private final JSpinner availabilitySpinner;
-    private SpinnerNumberModel itemsPerUnitModel;
-    private JComboBox<String> conditionBox;
+    private final JFormattedTextField sellingPriceText;
+    private final JSpinner itemsPerUnitSpinner;
+    private final SpinnerNumberModel itemsPerUnitModel;
+    private final JFormattedTextField itemsPerUnitText;
+    private final JComboBox<String> conditionBox;
     private final DefaultComboBoxModel<String> conditionModel;
-    private JComboBox<String> categoryBox;
+    private final JComboBox<String> categoryBox;
     private final DefaultComboBoxModel<String> categoryModel;
 
     private final JButton saveButton;
@@ -66,15 +71,24 @@ public class UpdateProductDialog extends BaseDialog {
         sellingPriceSpinner = new JSpinner(sellingPriceModel);
         
         itemsPerUnitModel = new SpinnerNumberModel(1, 1, 99, 1);
-        availabilitySpinner = new JSpinner(itemsPerUnitModel);
+        itemsPerUnitSpinner = new JSpinner(itemsPerUnitModel);
+        
+        acquisitionPriceText = ((JSpinner.NumberEditor) acquisitionPriceSpinner.getEditor()).getTextField();
+        ((NumberFormatter) acquisitionPriceText.getFormatter()).setAllowsInvalid(false);
+        
+        sellingPriceText = ((JSpinner.NumberEditor) sellingPriceSpinner.getEditor()).getTextField();
+        ((NumberFormatter) sellingPriceText.getFormatter()).setAllowsInvalid(false);
+        
+        itemsPerUnitText = ((JSpinner.NumberEditor) itemsPerUnitSpinner.getEditor()).getTextField();
+        ((NumberFormatter) itemsPerUnitText.getFormatter()).setAllowsInvalid(false);
 
         conditionModel = new DefaultComboBoxModel<>();
-
-        conditionModel.addElement("brandnew");
-        conditionModel.addElement("likenew");
-        conditionModel.addElement("good");
-        conditionModel.addElement("acceptable");
-        conditionModel.addElement("worn");
+        
+        conditionModel.addElement("Brand new");
+        conditionModel.addElement("Like new");
+        conditionModel.addElement("Good");
+        conditionModel.addElement("Acceptable");
+        conditionModel.addElement("Worn");
 
         conditionBox = new JComboBox<>(conditionModel);
 
@@ -140,7 +154,7 @@ public class UpdateProductDialog extends BaseDialog {
 
         constraint.gridx = 1;
         constraint.anchor = GridBagConstraints.LINE_START;
-        add(availabilitySpinner, constraint);
+        add(itemsPerUnitSpinner, constraint);
 
         //condition
         constraint.gridx = 0;

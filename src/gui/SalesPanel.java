@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -38,6 +39,8 @@ public class SalesPanel extends JPanel {
 	private JButton[] viewButton;
 	private String folderPath;
 	private String[] fileName;
+	
+	private JPanel fillingPanel;
 
     public SalesPanel() {
         setLayout(new BorderLayout());
@@ -50,9 +53,12 @@ public class SalesPanel extends JPanel {
         invoicePanel.setLayout(new GridBagLayout());
         invoicePanel.setBorder(BorderFactory.createLineBorder(Color.black));
         
+        fillingPanel = new JPanel();
+        
 //        folderPath = Utilities.getMainFolderPath() + "\\Customers_Invoices";
 //        folderPath = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\Point_Of_Sale\\Customers_Invoices";
-        folderPath = Utilities.getCustomerInvoicePath();
+//        folderPath = Utilities.getCustomerInvoicePath();
+        folderPath = Utilities.getFolderPath(Utilities.CUSTOMER_INVOICE_FOLDER_PATH);
         
 //        folder = new File(folderPath);
 //        
@@ -103,6 +109,9 @@ public class SalesPanel extends JPanel {
         constraint.weighty = 0.1;
         constraint.insets = new Insets(0, 5, 0, 5);
         
+        //test
+        int yPos = 0;
+        //
         for (int i = 0; i < listOfFiles.length; i++) {
         	if (listOfFiles[i].isFile()) {
         		fileName[i] = listOfFiles[i].getName();
@@ -133,8 +142,25 @@ public class SalesPanel extends JPanel {
 						
 					}
 				});
+                
+                //test
+                yPos = i;
+                //
         	}
+        	
         }
+        
+        //test pushing up gridbaglayout components must set a variable that sets the gridY components for this last element added to the row.
+        constraint.fill = GridBagConstraints.HORIZONTAL;
+        constraint.anchor = GridBagConstraints.NORTHWEST;
+        constraint.weightx = 1;
+        constraint.weighty = 1;
+        
+        yPos++;
+        constraint.gridy = yPos;
+        invoicePanel.remove(fillingPanel);
+        invoicePanel.add(fillingPanel, constraint);
+        //
         
         add(invoicePanel, BorderLayout.EAST);
     }

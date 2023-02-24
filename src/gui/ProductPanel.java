@@ -121,6 +121,10 @@ public class ProductPanel extends JPanel {
     public static String productCategory;
     public static String purchaseTotalAmount;
     public static String purchaseFinalAmount;
+    
+    //test pull up gridbaglayout components
+    private JLabel filler = new JLabel();
+    //
 
     public ProductPanel() {
         setLayout(new BorderLayout());
@@ -244,11 +248,12 @@ public class ProductPanel extends JPanel {
         productToolBar.add(productSearchPanel);
 
         if (!productTable.isRowSelected(productTable.getSelectedRow())) {
-            addToCartButton.setEnabled(false);
             createProductButton.setEnabled(false);
-            viewProductButton.setEnabled(false);
-            updateProductButton.setEnabled(false);
-            removeProductButton.setEnabled(false);
+//            addToCartButton.setEnabled(false);
+//            viewProductButton.setEnabled(false);
+//            updateProductButton.setEnabled(false);
+//            removeProductButton.setEnabled(false);
+            setProductProcessingButtonsVisible(false);
         }
         
         arrowsPanel.add(previousButton);
@@ -288,11 +293,12 @@ public class ProductPanel extends JPanel {
                     setPreviousButtonEnabled(false);
 
                     if (categoryItem.equals("Select a category")) {
-                        addToCartButton.setEnabled(false);
-                        createProductButton.setEnabled(false);
-                        viewProductButton.setEnabled(false);
-                        updateProductButton.setEnabled(false);
-                        removeProductButton.setEnabled(false);
+                    	createProductButton.setEnabled(false);
+//                        addToCartButton.setEnabled(false);
+//                        viewProductButton.setEnabled(false);
+//                        updateProductButton.setEnabled(false);
+//                        removeProductButton.setEnabled(false);
+                        setProductProcessingButtonsVisible(false);
                         
                         productCategoryId = -1;
                         System.out.println("Prod category id: " + productCategoryId);
@@ -302,16 +308,18 @@ public class ProductPanel extends JPanel {
                     }
 
                     if (!productTable.isRowSelected(productTable.getSelectedRow())) {
-                        addToCartButton.setEnabled(false);
-                        viewProductButton.setEnabled(false);
-                        updateProductButton.setEnabled(false);
-                        removeProductButton.setEnabled(false);
+//                        addToCartButton.setEnabled(false);
+//                        viewProductButton.setEnabled(false);
+//                        updateProductButton.setEnabled(false);
+//                        removeProductButton.setEnabled(false);
+                    	setProductProcessingButtonsVisible(false);
                     }
 
                     createProductButton.setEnabled(true);
-                    viewProductButton.setEnabled(false);
-                    updateProductButton.setEnabled(false);
-                    removeProductButton.setEnabled(false);
+//                    viewProductButton.setEnabled(false);
+//                    updateProductButton.setEnabled(false);
+//                    removeProductButton.setEnabled(false);
+                    setProductProcessingButtonsVisible(false);
 
                     //getting the CategoryGUIForm object from the list in order to get the id field
                     int categoryListIndex = categoryComboBox.getSelectedIndex();
@@ -332,10 +340,11 @@ public class ProductPanel extends JPanel {
                 switch (mouseEventsource) {
                     case 1: {
                         if (productTable.isRowSelected(productTable.getSelectedRow())) {
-                            addToCartButton.setEnabled(true);
-                            viewProductButton.setEnabled(true);
-                            updateProductButton.setEnabled(true);
-                            removeProductButton.setEnabled(true);
+//                            addToCartButton.setEnabled(true);
+//                            viewProductButton.setEnabled(true);
+//                            updateProductButton.setEnabled(true);
+//                            removeProductButton.setEnabled(true);
+                        	setProductProcessingButtonsVisible(true);
 
                             productGUIListener.productGUIFormObjectSet();
                         }
@@ -559,6 +568,18 @@ public class ProductPanel extends JPanel {
         constraint.gridy++;
         
         addToCartButton.setEnabled(false);
+        
+        //test
+        if(purchaseListIndex > 1) {
+        	shoppingCartPanel.remove(filler);
+        }
+        constraint.fill = GridBagConstraints.HORIZONTAL;
+        constraint.anchor = GridBagConstraints.NORTHWEST;
+        constraint.weightx = 1;
+        constraint.weighty = 1;
+        
+        shoppingCartPanel.add(filler, constraint);
+        //
 
         /**
          * repaints the purchaseList every time an item is added
@@ -689,6 +710,13 @@ public class ProductPanel extends JPanel {
 
     public void setCustomerGUIForm(CustomerGUIForm customerGUIForm) {
         this.customerGUIForm = customerGUIForm;
+    }
+    
+    public void setProductProcessingButtonsVisible(boolean visible) {
+    	addToCartButton.setEnabled(visible);
+        viewProductButton.setEnabled(visible);
+        updateProductButton.setEnabled(visible);
+        removeProductButton.setEnabled(visible);
     }
 
     /*--------------Listeners-------------------*/

@@ -8,6 +8,9 @@ import model.ProductCondition;
 
 public final class Utilities {
 	
+	public static final int MAIN_FOLDER_PATH = 0;
+	public static final int CUSTOMER_INVOICE_FOLDER_PATH = 1;
+	
 	private Utilities() {
 		/*Do not instantiate this class*/
 	}
@@ -73,15 +76,26 @@ public final class Utilities {
     	}
     }
     
-    //Get path of main folder
-    public static final String getMainFolderPath() {
-    	return FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\Point_Of_Sale";
+    public static final String getFolderPath(int pathType) {
+    	String basePath = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+    	switch (pathType) {
+		case MAIN_FOLDER_PATH:
+			return basePath + "\\Point_Of_Sale";	
+		case CUSTOMER_INVOICE_FOLDER_PATH:
+			return basePath + "\\Point_Of_Sale\\Customers_Invoices";
+		}
+    	return null;
     }
     
+    //Get path of main folder
+//    public static final String getMainFolderPath() {
+//    	return FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\Point_Of_Sale";
+//    }
+    
     //Get path of customer invoices
-    public static final String getCustomerInvoicePath() {
-    	return FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\Point_Of_Sale\\Customers_Invoices";
-    }
+//    public static final String getCustomerInvoicePath() {
+//    	return FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\Point_Of_Sale\\Customers_Invoices";
+//    }
       
     //Notifications
     public static void notifyOfRowInsertion(String entityName){
@@ -101,7 +115,7 @@ public final class Utilities {
     }
     
     public static void notifyOfInvoiceCreation(){
-        JOptionPane.showMessageDialog(null, "Products sold to customer.");
+        JOptionPane.showMessageDialog(null, "Products sold to customer.\nOpen the invoice file from the Sales panel.");
     }
     
     public static void notifyOfError(String error) {

@@ -48,7 +48,8 @@ public class DataBaseManager {
         try {
             connection = DriverManager.getConnection(("jdbc:mysql://" + dbUrl), dbUser, dbPassword);
         } catch (SQLException e) {
-            Utilities.notifyOfError(e.getMessage());
+//            Utilities.notifyOfError(e.getMessage());
+        	Utilities.notifyOfError("Please set up and connect to the Database");
         }
     }
 

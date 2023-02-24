@@ -80,8 +80,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
     	//load settings file, database and controllers
-//        settingsManager = new SettingsManager(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
-        settingsManager = new SettingsManager(Utilities.getMainFolderPath());
+    	settingsManager = new SettingsManager(Utilities.getFolderPath(Utilities.MAIN_FOLDER_PATH));
 
         if (settingsManager.fileExists()) {
             settingsFile = (SettingsFile) settingsManager.getSettingsFromFile();
@@ -106,8 +105,8 @@ public class MainFrame extends JFrame {
         contactController = new ContactController(database);
         productController = new ProductController(database);
         invoiceController = new InvoiceController(database);
-    	//
     	
+        //set frame components
         setTitle("Thrif-T-hrill");
 
         usersPanel = new UsersPanel();
@@ -133,34 +132,6 @@ public class MainFrame extends JFrame {
 
         add(mainSplit);
 
-//        //load db and program settings
-//        settingsManager = new SettingsManager(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
-////        settingsManager = new SettingsManager(Utilities.getMainFolderPath());
-//
-//        if (settingsManager.fileExists()) {
-//            settingsFile = (SettingsFile) settingsManager.getSettingsFromFile();
-//
-//            DataBaseManager.dbUrl = settingsFile.getDbURL();
-//            DataBaseManager.dbUser = settingsFile.getDbUsername();
-//            DataBaseManager.dbPassword = settingsFile.getDbPassword();
-//
-//            DataBaseManager.limit = Integer.parseInt(settingsFile.getQueryLimit());
-//        }
-//
-//        DataBaseManager database = new DataBaseManager();
-//        database.connectToDB();
-//
-//        if (database.getConnection() == null) {
-//            new ConnectionConfigurator();
-//        }
-//
-//        customerController = new CustomerController(database);
-//        supplierController = new SupplierController(database);
-//        categoryController = new CategoryController(database);
-//        contactController = new ContactController(database);
-//        productController = new ProductController(database);
-//        invoiceController = new InvoiceController(database);
-
         shoppingCartMap = new LinkedHashMap<>();
         productPanel.setShoppingCartMap(shoppingCartMap);
 
@@ -178,9 +149,7 @@ public class MainFrame extends JFrame {
 
         populateSalesTree();
         
-        //test
-        salesPanel.populateInvoiceList(Utilities.getCustomerInvoicePath());
-        //
+        salesPanel.populateInvoiceList(Utilities.getFolderPath(Utilities.CUSTOMER_INVOICE_FOLDER_PATH));
 
         //fetching customers from DB
         populateCustomerGUITableFromDataBase();
@@ -257,6 +226,12 @@ public class MainFrame extends JFrame {
                 }
 
                 populateCustomerGUITableFromDataBase();
+                
+                if(customerGUIForm != null) {
+                	customerGUIForm = null;
+                	usersPanel.setCustomerGUIForm(null);
+                	usersPanel.setCustomerProcessingButtonsVisible(false);
+                }
             }
 
             @Override
@@ -264,7 +239,13 @@ public class MainFrame extends JFrame {
                 if (!customerController.invoicedCustomerExists(customerGUIForm)) {
                     customerController.deleteDatabaseTableRow(customerGUIForm);
                     Utilities.notifyOfRowDeletion("Customer");
-                }
+                    
+                    if(customerGUIForm != null) {
+                    	customerGUIForm = null;
+                    	usersPanel.setCustomerGUIForm(null);
+                    	usersPanel.setCustomerProcessingButtonsVisible(false);
+                    }
+                } 
             }
 
             @Override
@@ -326,6 +307,12 @@ public class MainFrame extends JFrame {
                 }
 
                 populateSupplierGUITableFromDataBase();
+                
+                if(supplierGUIForm != null) {
+                	supplierGUIForm = null;
+                	usersPanel.setSupplierGUIForm(null);
+                	usersPanel.setCustomerProcessingButtonsVisible(false);
+                }
             }
 
             @Override
@@ -357,6 +344,12 @@ public class MainFrame extends JFrame {
                 if (!supplierController.suppliedProductExists(supplierGUIForm)) {
                     supplierController.deleteDatabaseTableRow(supplierGUIForm);
                     Utilities.notifyOfRowDeletion("Supplier");
+                    
+                    if(supplierGUIForm != null) {
+                    	supplierGUIForm = null;
+                    	usersPanel.setSupplierGUIForm(null);
+                    	usersPanel.setCustomerProcessingButtonsVisible(false);
+                    }
                 }
             }
 
@@ -364,8 +357,6 @@ public class MainFrame extends JFrame {
             public boolean supplierProductExistenceChecked() {
                 return supplierController.suppliedProductExists(supplierGUIForm);
             }
-            
-            
         });
 
         usersPanel.setCustomerContactGUIListener(new GUIAdapter() {
@@ -527,19 +518,6 @@ public class MainFrame extends JFrame {
                 }
             }
         });
-        
-        customerPanel.setCustomerContactGUIListener(new GUIAdapter(){
-            @Override
-            public void customerContactRelationshipDeleted() {
-                customerController.deleteCustomerContactRelationship(customerGUIForm, contactGUIForm);
-            }
-
-            @Override
-            public void customerContactDeleted() {
-                contactController.deleteDatabaseTableRow(contactGUIForm);
-            } 
-            
-        });
 
         supplierPanel.setSupplierGUIListener(new GUIAdapter() {
             @Override
@@ -561,7 +539,6 @@ public class MainFrame extends JFrame {
                         supplierPanel.setNextButtonEnabled(true);
                     }
                 }
-
             }
 
             @Override
@@ -632,13 +609,18 @@ public class MainFrame extends JFrame {
                 productPanel.clearProductsTable();
 
                 populateProductGUITableFromDataBase();
+                
+                if(productGUIForm != null) {
+                	productGUIForm = null;
+                	productPanel.setProductGUIForm(null);
+                	productPanel.setProductProcessingButtonsVisible(false);
+                }
             }
 
             @Override
             public void databaseTableRowRemoved(int id) {
                 productController.deleteDatabaseTableRow(productGUIForm);
 
-                //updating customer list
                 if (!productController.databaseTableRowExists(productGUIForm)) {
                     Utilities.notifyOfRowDeletion("Product");
 
@@ -646,6 +628,12 @@ public class MainFrame extends JFrame {
                     productPanel.setProductGUIForm(productGUIForm);
 
                     productPanel.removeRowFromTable(productPanel.getSelectedTableRowIndex());
+                    
+                    if(productGUIForm != null) {
+                    	productGUIForm = null;
+                    	productPanel.setProductGUIForm(null);
+                    	productPanel.setProductProcessingButtonsVisible(false);
+                    }
                 }
             }
 
@@ -789,12 +777,6 @@ public class MainFrame extends JFrame {
                 String filePath = settingsManager.getInvoiceFilePath() + "\\Invoice_" + Integer.toString(lastCreatedInvoiceId) + "_" + customerGUIForm.getName() + "_" + customerGUIForm.getLastname() + ".pdf";
                 
                 invoiceManager.generateInvoice(filePath, invoiceGUIForm, lastCreatedInvoiceId, customerGUIForm, contactGUIForm, purchasedProductsList);
-                
-                try {
-                    Desktop.getDesktop().open(new File(settingsManager.getInvoiceFilePath()));
-                } catch (IOException ex) {
-                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
 
                 clearFrontEndShoppingCart();
 
@@ -814,7 +796,7 @@ public class MainFrame extends JFrame {
 
                 salesPanel.populateSalesTree(salesInfoMap);
                 
-                salesPanel.populateInvoiceList(Utilities.getCustomerInvoicePath());
+                salesPanel.populateInvoiceList(Utilities.getFolderPath(Utilities.CUSTOMER_INVOICE_FOLDER_PATH));
             }
         });
 

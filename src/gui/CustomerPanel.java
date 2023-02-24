@@ -41,7 +41,7 @@ public class CustomerPanel extends JPanel {
     private PopUpMenuDialogListener dialogListener;
     
     private CustomerGUIListener customerGUIListener;
-    private CustomerContactGUIListener customerContactGUIListener;
+//    private CustomerContactGUIListener customerContactGUIListener;
     
     public static int customerId;
 
@@ -174,7 +174,7 @@ public class CustomerPanel extends JPanel {
         this.customerGUIListener = customerGUIListener;
     }
     
-    public void setCustomerContactGUIListener(CustomerContactGUIListener customerContactGUIListener) {
-        this.customerContactGUIListener = customerContactGUIListener;
-    }
+//    public void setCustomerContactGUIListener(CustomerContactGUIListener customerContactGUIListener) {
+//        this.customerContactGUIListener = customerContactGUIListener;
+//    }
 }

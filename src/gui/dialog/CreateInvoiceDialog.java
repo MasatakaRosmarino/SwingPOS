@@ -19,12 +19,15 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.text.NumberFormatter;
+
 import model.PaymentMethod;
 import utilities.Utilities;
 
@@ -35,6 +38,7 @@ public class CreateInvoiceDialog extends JDialog {
     private final JPanel buttonsPanel;
     private final JSpinner discountSpinner;
     private final SpinnerNumberModel discountModel;
+    private final JFormattedTextField dicsountText;
     private final JButton discountButton;
     private final JComboBox<String> paymentMethodComboBox;
     private final JLabel totalPayment;
@@ -95,7 +99,7 @@ public class CreateInvoiceDialog extends JDialog {
         
         //header
         constraint.gridx = 0;
-        constraint.anchor = GridBagConstraints.LINE_START;
+        constraint.anchor = GridBagConstraints.LINE_END;
         constraint.insets = new Insets(0, 15, 0, 0);
         checkoutPanel.add(new JLabel("ITEM"), constraint);
 
@@ -106,7 +110,7 @@ public class CreateInvoiceDialog extends JDialog {
         
         //header
         constraint.gridx = 0;
-        constraint.anchor = GridBagConstraints.LINE_START;
+        constraint.anchor = GridBagConstraints.LINE_END;
         constraint.insets = new Insets(0, 15, 0, 0);
         checkoutPanel.add(new JLabel("ITEM"), constraint);
 
@@ -119,7 +123,7 @@ public class CreateInvoiceDialog extends JDialog {
         
         for (Map.Entry<Integer, ProductGUIForm> entry : shoppingCartItems.entrySet()) {
             constraint.gridx = 0;
-            constraint.anchor = GridBagConstraints.LINE_START;
+            constraint.anchor = GridBagConstraints.LINE_END;
             constraint.insets = new Insets(0, 15, 0, 0);
             checkoutPanel.add(new JLabel(entry.getValue().getProductName()), constraint);
 
@@ -169,6 +173,9 @@ public class CreateInvoiceDialog extends JDialog {
         //discount
         discountModel = new SpinnerNumberModel(0.0, 0.0, Double.parseDouble(ProductPanel.purchaseFinalAmount), 0.01);
         discountSpinner = new JSpinner(discountModel);
+        
+        dicsountText = ((JSpinner.NumberEditor) discountSpinner.getEditor()).getTextField();
+        ((NumberFormatter) dicsountText.getFormatter()).setAllowsInvalid(false);
         
         constraint.gridy++;
         constraint.gridx = 0;
